@@ -5,9 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.IdRes
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import com.google.gson.Gson
@@ -53,6 +57,10 @@ class MainActivity : AppCompatActivity(), LifecycleRegistryOwner {
                 bindUi(it!!)
             })
         }
+
+        supportFragmentManager.perform {
+            add(MainFragment(), "TAG")
+        }
     }
 
     private fun bindUi(uiData: UiData) {
@@ -76,6 +84,16 @@ class MainActivity : AppCompatActivity(), LifecycleRegistryOwner {
         fun newIntent(context: Context) = Intent(context, MainActivity::class.java).apply {
             putExtra("name", "extras")
         }
+    }
+}
+
+class MainFragment : Fragment() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onGetLayoutInflater(savedInstanceState: Bundle): LayoutInflater {
+        return super.onGetLayoutInflater(savedInstanceState)
     }
 }
 
@@ -131,4 +149,10 @@ inline private fun <reified T : ViewModel> AppCompatActivity.bindViewModel(): La
 
 inline private fun <reified T : View> AppCompatActivity.bindView(@IdRes id: Int): Lazy<T> {
     return lazy(LazyThreadSafetyMode.NONE) { findViewById<T>(id) }
+}
+
+fun FragmentManager.perform(block: FragmentTransaction.() -> Unit) {
+    val transaction = beginTransaction()
+    block(transaction)
+    transaction.commit()
 }

@@ -1,5 +1,6 @@
 package info.ericlin.kotlin.customviews
 
+import com.google.gson.annotations.SerializedName
 import io.reactivex.Single
 import retrofit2.http.GET
 
@@ -9,7 +10,7 @@ interface WeatherService {
     fun get(): Single<WeatherResponse>
 }
 
-data class WeatherResponse(val name: String, val weather: List<Weather>, val wind: Wind)
+data class WeatherResponse(val name: String, @SerializedName("weathers") val weather: List<Weather>, val wind: Wind)
 
 data class Weather(val main: String, val description: String)
 

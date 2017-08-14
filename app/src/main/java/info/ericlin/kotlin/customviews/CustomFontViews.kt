@@ -24,7 +24,7 @@ private fun readTypeFace(context: Context, attrs: AttributeSet?): Typeface? {
     }
 }
 
-class CustomFontTextView @JvmOverloads constructor(
+class CustomFontTextView constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = android.R.attr.textViewStyle
