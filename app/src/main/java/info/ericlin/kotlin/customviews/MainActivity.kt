@@ -17,6 +17,7 @@ import android.widget.TextView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import info.ericlin.kotlin.crashes.R
+import info.ericlin.kotlin.customviews.autovalue.WeatherTypeAdapterFactory
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -108,7 +109,7 @@ class MainViewModel : ViewModel() {
 
     // don't do this, use dependency instead!
     private val okHttpClient: OkHttpClient
-    private val gson: Gson = GsonBuilder().create()
+    private val gson: Gson = GsonBuilder().registerTypeAdapterFactory(WeatherTypeAdapterFactory.create()).create()
     private val service: WeatherService
 
     private val _data = MutableLiveData<UiData>()
